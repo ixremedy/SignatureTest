@@ -15,18 +15,18 @@ dependencies {
     implementation("com.alibaba:fastjson:1.2.83")
     implementation("org.apache.logging.log4j:log4j-core:2.18.0")
 
-    val junitVersion = "5.8.0"
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-
-    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
 
-tasks.test {
+tasks.withType<Test> {
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
     useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }

@@ -5,13 +5,16 @@ import com.forthreal.crypto.SignedJsonValidator;
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class Tests {
-    private String generatedString;
+class TestCases {
+    @BeforeAll
+    static void beforeAll() {
+    }
 
+    private static String generatedString;
     @Test
     @Order(0)
     @DisplayName("Test that we can generate a signed JSON package")
-    public void testGeneration() {
+    void generationTest() {
         var inputObject = new JSONObject();
         inputObject.put("stringTest", "doTest");
         inputObject.put("intTest", 10);
@@ -21,12 +24,13 @@ public class Tests {
 
             generatedString = signer.getSignedJsonString(inputObject);
         });
+
     }
 
     @Test
     @Order(1)
     @DisplayName("Check that we're able to validate generated JSON")
-    public void testParsing() {
+    void parsingTest() {
         Assertions.assertDoesNotThrow(() -> {
             var validator = new SignedJsonValidator();
 
